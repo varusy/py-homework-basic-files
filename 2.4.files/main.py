@@ -27,8 +27,14 @@ def get_shop_list_by_dishes(dishes, person_count):
     for dish in dishes:
         if dish in cook_book:
             for value in cook_book[dish]:
-                shop_list[value['ingredient_name']] = {'measure': value['measure'],
-                                                       'quantity': int(value['quantity']) * person_count}
+                if value['ingredient_name'] not in shop_list:
+                    shop_list[value['ingredient_name']] = {'measure': value['measure'],
+                                                           'quantity': int(value['quantity']) * person_count}
+                else:
+                    a = shop_list.get(value['ingredient_name'])
+                    b = a['quantity']
+                    shop_list[value['ingredient_name']] = {'measure': value['measure'],
+                                                           'quantity': int(value['quantity']) * person_count + b}
     print(shop_list)
 
 get_shop_list_by_dishes(['Омлет', 'Фахитос'], 9)
@@ -48,7 +54,7 @@ with open('3.txt', 'r', encoding='utf-8') as f:
     counter.append(counter3)
     my_counter['3.txt'] = counter3
 
-a = len(counter)
+a = len(counter) - 2
 
 for number in counter:
     for value in my_counter:
